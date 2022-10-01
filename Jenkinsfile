@@ -11,9 +11,9 @@ pipeline {
         }
         withSonarQubeEnv(installationName: 'sonarqube') {
           bat """${scannerHome}/bin/sonar-scanner \
-              -Dsonar.projectKey=We-Connect \
+              -Dsonar.projectKey=we-Connect \
                -Dsonar.sources=. \
-               -Dsonar.projectName=We Connect \
+               -Dsonar.projectName=we-connect \
                -Dsonar.login=sonaradmin \
                -Dsonar.password=sonaradmin \
                -Dsonar.projectVersion=1.0 """
