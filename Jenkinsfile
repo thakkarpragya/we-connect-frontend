@@ -10,7 +10,7 @@ pipeline {
           scannerHome = tool 'sonarqube'
         }
         withSonarQubeEnv(installationName: 'sonarqube') {
-          bash """${scannerHome}/bin/sonar-scanner \
+          bat """${scannerHome}/bin/sonar-scanner \
               -Dsonar.projectKey=we-connect \
                -Dsonar.sources=. \
                -Dsonar.projectName=we-connect \
@@ -22,35 +22,35 @@ pipeline {
     }
     stage('Build artifacts') {
       steps {
-        bash 'mkdir -p test-reports'
-        bash 'npm install --force'
-        bash 'npm run build'
+        bat 'mkdir -p test-reports'
+        bat 'npm install --force'
+        bat 'npm run build'
       }
     }
     stage('Unit test') {
       steps {
-        bash 'npm run test'
-        bash 'echo Unit-Test'
+        bat 'npm run test'
+        bat 'echo Unit-Test'
       }
     }
     stage('Integration test') {
       steps {
-        bash 'npm run integration-test'
+        bat 'npm run integration-test'
         // sh 'npm run generate-report'
-        bash 'echo Integration-Test'
+        bat 'echo Integration-Test'
       }
     }
     stage('Deploy to staging') {
       steps {
-        bash 'rm -rf /Users/nvallore/Desktop/apache-tomcat-10.0.26-staging/webapps/we-connect-frontend/*'
-        bash 'scp -r build/* /Users/nvallore/Desktop/apache-tomcat-10.0.26-staging/webapps/we-connect-frontend/'
+        bat 'rm -rf /Users/nvallore/Desktop/apache-tomcat-10.0.26-staging/webapps/we-connect-frontend/*'
+        bat 'scp -r build/* /Users/nvallore/Desktop/apache-tomcat-10.0.26-staging/webapps/we-connect-frontend/'
       }
     }
         stage('Deploy to production') {
       steps {
         input message: 'Push to prod? (Click "Proceed" to continue)'
-        bash 'rm -rf /Users/nvallore/Desktop/apache-tomcat-10.0.26-production/webapps/we-connect-frontend/*'
-        bash 'scp -r build/* /Users/nvallore/Desktop/apache-tomcat-10.0.26-production/webapps/we-connect-frontend/'
+        bat 'rm -rf /Users/nvallore/Desktop/apache-tomcat-10.0.26-production/webapps/we-connect-frontend/*'
+        bat 'scp -r build/* /Users/nvallore/Desktop/apache-tomcat-10.0.26-production/webapps/we-connect-frontend/'
       }
     }
   }
