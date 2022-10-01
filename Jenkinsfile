@@ -10,7 +10,13 @@ pipeline {
           scannerHome = tool 'sonarqube'
         }
         withSonarQubeEnv(installationName: 'sonarqube') {
-          sh "${scannerHome}/bin/sonar-scanner"
+          sh """${scannerHome}/bin/sonar-scanner \
+              -Dsonar.projectKey=we-connect \
+               -Dsonar.sources=. \
+               -Dsonar.projectName=we-connect \
+               -Dsonar.login=admin \
+               -Dsonar.password=admin \
+               -Dsonar.projectVersion=1.0 """
         }
       }
     }
@@ -23,7 +29,7 @@ pipeline {
     }
     stage('Unit test') {
       steps {
-        sh 'npm run unit-test'
+        sh 'npm run test'
         sh 'echo Unit-Test'
       }
     }
@@ -36,15 +42,15 @@ pipeline {
     }
     stage('Deploy to staging') {
       steps {
-        sh 'rm -rf /Users/ashank661/Desktop/apache-tomcat-10.0.22-staging/webapps/we-connect-frontend/*'
-        sh 'scp -r build/* /Users/ashank661/Desktop/apache-tomcat-10.0.22-staging/webapps/we-connect-frontend/'
+        sh 'rm -rf /Users/nvallore/Desktop/apache-tomcat-10.0.26-staging/webapps/we-connect-frontend/*'
+        sh 'scp -r build/* /Users/nvallore/Desktop/apache-tomcat-10.0.26-staging/webapps/we-connect-frontend/'
       }
     }
         stage('Deploy to production') {
       steps {
         input message: 'Push to prod? (Click "Proceed" to continue)'
-        sh 'rm -rf /Users/ashank661/Desktop/apache-tomcat-10.0.22-production/webapps/we-connect-frontend/*'
-        sh 'scp -r build/* /Users/ashank661/Desktop/apache-tomcat-10.0.22-production/webapps/we-connect-frontend/'
+        sh 'rm -rf /Users/nvallore/Desktop/apache-tomcat-10.0.26-production/webapps/we-connect-frontend/*'
+        sh 'scp -r build/* /Users/nvallore/Desktop/apache-tomcat-10.0.26-production/webapps/we-connect-frontend/'
       }
     }
   }

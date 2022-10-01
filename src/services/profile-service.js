@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const profileHost = 'http://127.0.0.1:8001/profile';
-// const profileHost = 'http://localhost/profile';
+// const profileHost = 'http://127.0.0.1:8001/profile';
+const profileHost = 'http://localhost/profile';
 
 export function getProfileData(userRegistrationId) {
 

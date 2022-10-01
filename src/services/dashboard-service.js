@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const dashboardHost = 'http://127.0.0.1:8002/dashboard';
-// const dashboardHost = 'http://localhost/dashboard';
+// const dashboardHost = 'http://127.0.0.1:8002/dashboard';
+const dashboardHost = 'http://localhost/dashboard';
 
 export function getDashboardDetails(userRole) {
     console.log(userRole);
